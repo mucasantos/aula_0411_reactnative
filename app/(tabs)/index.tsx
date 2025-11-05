@@ -1,98 +1,248 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Feather } from "@expo/vector-icons";
+import React from "react";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+export default function App() {
 
-export default function HomeScreen() {
+  const transactions = [
+    {
+      id: '1',
+      title: '🍔',
+      describe: 'Food & Drink',
+      prime: '$15.40',
+      time: '10/10/2022 06:27',
+    },
+    {
+      id: '1',
+      title: '⚽',
+      describe: 'Sports',
+      prime: '$15.40',
+      time: '10/10/2022 06:27',
+    },
+    {
+      id: '1',
+      title: '👙',
+      describe: 'Shopping',
+      prime: '$15.40',
+      time: '10/10/2022 06:27',
+    },
+    {
+      id: '1',
+      title: '✈️',
+      describe: 'Travel',
+      prime: '$15.40',
+      time: '10/10/2022 06:27',
+    },
+  ];
+
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <SafeAreaView>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.logo} >TK</Text>
+        <Feather name="cloud-rain" size={22} color="blue" />
+      </View>
+      {/* Card Marelo */}
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+      <View style={styles.balanceCard}>
+        <Text>Balance</Text>
+        <View style={styles.balanceRow}>
+          <Text style={styles.textBalance} >$5,750.20</Text>
+          <View style={styles.percentBox}>
+            <Text>15%</Text>
+          </View>
+        </View>
+      </View>
+      {/* Botoes */}
+
+      {/* BOTÕES */}
+      <View style={styles.acoes}>
+        <TouchableOpacity style={[styles.botao, styles.botaoAzul]}>
+          <Feather name="arrow-up-right" size={20} color="#fff" />
+          <Text style={styles.textoBotao}>Enviar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.botao, styles.botaoVermelho]}>
+          <Feather name="arrow-down-left" size={20} color="#fff" />
+          <Text style={styles.textoBotao}>Receber</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.botaoMais}>
+          <Feather name="more-horizontal" size={24} color="#333" />
+        </TouchableOpacity>
+      </View>
+
+      {/* LEMBRETE */}
+      <View style={styles.lembrete}>
+        <View style={styles.lembreteCabecalho}>
+          <Text style={styles.lembreteTitulo}>Lembrete</Text>
+          <Text style={styles.verTudo}>Ver todos</Text>
+        </View>
+
+        <View style={styles.lembreteItem}>
+
+          <View>
+            <Text style={styles.lembreteNome}>Pagar cabelereiro</Text>
+            <Text style={styles.lembreteData}>10/11/2025 12:00</Text>
+          </View>
+          <Text style={styles.lembreteValor}>R$ 55,00</Text>
+        </View>
+      </View>
+
+
+      {/* Card Remind */}
+
+      {/* Transactions List */}
+      <FlatList
+        data={transactions}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.transactionItem}>
+            <Text style={styles.icons} >{item.title}</Text>
+            <Text>{item.time}</Text>
+            <Text>${item.prime}</Text>
+          </View>
+        )}
+
+      />
+
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+
+  // BOTÕES
+  acoes: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'space-between',
+    gap: 10,
+    marginBottom: 20,
+    paddingHorizontal: 16,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  botao: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 9,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 12,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  botaoAzul: {
+    backgroundColor: '#007BFF',
   },
-});
+  botaoVermelho: {
+    backgroundColor: '#FF5C77',
+  },
+  botaoMais: {
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 12,
+    elevation: 2,
+  },
+  textoBotao: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+
+  // LEMBRETE
+  lembrete: {
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 20,
+    paddingHorizontal: 16,
+    marginHorizontal: 16,
+  },
+  lembreteCabecalho: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  lembreteTitulo: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  verTudo: {
+    color: '#007BFF',
+  },
+  lembreteItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 12,
+  },
+  lembreteNome: {
+    fontWeight: 'bold',
+  },
+  lembreteData: {
+    fontSize: 12,
+    color: '#666',
+  },
+  lembreteValor: {
+    color: '#E63946',
+    fontWeight: 'bold',
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 16,
+    paddingHorizontal: 16,
+  },
+  logo: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#9B6AFF",
+  },
+  balanceCard: {
+    backgroundColor: "#e7c65cff",
+    borderRadius: 16,
+    padding: 20,
+    marginVertical: 16,
+    marginHorizontal: 16,
+  },
+  balanceRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  textBalance: {
+    fontSize: 28,
+    fontWeight: "bold",
+    marginRight: 8,
+  },
+  percentBox: {
+    backgroundColor: "#ffffffff",
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+
+  },
+  transactionItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderRadius: 8,
+    backgroundColor: "#c5c1c1ff",
+    padding: 16,
+    marginHorizontal: 16,
+    marginVertical: 4,
+  },
+  icons: {
+    fontSize: 36,
+  },
+})
