@@ -1,0 +1,5 @@
+
+POST https://recipes-nkpy.onrender.com/api/recipes
+Content-Type: application/json
+
+{ "link": "https://www.receiteria.com.br/arroz-e-risotos/"}
